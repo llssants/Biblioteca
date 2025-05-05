@@ -1,0 +1,53 @@
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalhes e Edição do Livro</title>
+  <!-- Incluindo Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Estilos personalizados (se houver) -->
+</head>
+<body>
+  <div class="container mt-5">
+    <a href="/" class="btn btn-warning">Voltar para a Home</a>
+    <h2>Detalhes do Livro: {{ livro.nome }}</h2>
+    <p><strong>Nome:</strong> {{ livro.nome }}</p>
+    <p><strong>Autor:</strong> {{ livro.autor }}</p>
+    <p><strong>Editora:</strong> {{ livro.editora }}</p>
+    <p><strong>Gênero:</strong>
+      {% for genero in livro.genero.all %}
+        {{ genero.nome }}{% if not forloop.last %}, {% endif %}
+      {% endfor %}
+    </p>
+    <p><strong>Preço:</strong> R$ {{ livro.preco }}</p>
+    <p><strong>Data de Publicação:</strong> {{ livro.data_pub }}</p>
+    <p><strong>Status:</strong> {{ livro.status }}</p>
+
+    <h3 class="mt-4">Editar Livro</h3>
+
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <b><li {% if message.tags %} class="{{ message.tags }}" {% endif %} style="color: red;">
+            {{ message }}
+          </li></b>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <form method="post">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button type="submit" class="btn btn-success btn-block btn-lg mt-2">Salvar Edições do Livro</button>
+    </form>
+    <br>
+  </div>
+
+  <!-- Incluindo jQuery e Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

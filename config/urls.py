@@ -1,17 +1,8 @@
 from django.contrib import admin
-from django.urls import include, path
-from django.views.generic import TemplateView
-from app.views import *
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', IndexView.as_view(), name='index'),
-]
-
-from django.contrib import admin
 from django.urls import path
 from django.views.generic import TemplateView
 from app.views import *
+
 urlpatterns = [
 path('admin/', admin.site.urls),
 path('', IndexView.as_view(), name='index'),
@@ -27,4 +18,7 @@ path('leitor/', LeitoresView.as_view(),
 name='leitor'),
 path('genero/', GenerosView.as_view(),
 name='genero'),
+path('editar/<int:id>/', EditarLivroView.as_view(), name='editar'),
+path('delete/<int:id>/', DeleteLivroView.as_view(),
+name='delete'),
 ]
